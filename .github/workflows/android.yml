@@ -28,5 +28,5 @@ jobs:
       uses: actions/upload-artifact@v3.1.0
       with:
         name: "Publish"
-        path: "/app"
+        path: "app/build/"
         # The desired behavior if no files are found using the provided path

@@ -116,10 +116,10 @@ public class HookMain implements IXposedHookLoadPackage {
                     }
                     if (origin_preview_camera != null && origin_preview_camera.equals(param.thisObject)) {
                         param.args[0] = fake_SurfaceTexture;
-                        XposedBridge.log("【VCAM】发现重复" + origin_preview_camera.toString());
+                        XposedBridge.log("【VCAM】Duplicate found" + origin_preview_camera.toString());
                         return;
                     } else {
-                        XposedBridge.log("【VCAM】创建预览");
+                        XposedBridge.log("【VCAM】Preview created");
                     }
 
                     origin_preview_camera = (Camera) param.thisObject;
@@ -173,7 +173,7 @@ public class HookMain implements IXposedHookLoadPackage {
                     }
                     return;
                 }
-                XposedBridge.log("【VCAM】1位参数初始化相机，类：" + c2_state_callback.toString());
+                XposedBridge.log("【VCAM】 1 openCamera Initialized class：" + c2_state_callback.toString());
                 is_first_hook_build = true;
                 process_camera2_init(c2_state_callback);
             }
@@ -209,7 +209,7 @@ public class HookMain implements IXposedHookLoadPackage {
                         return;
                     }
                     c2_state_callback = param.args[2].getClass();
-                    XposedBridge.log("【VCAM】2位参数初始化相机，类：" + c2_state_callback.toString());
+                    XposedBridge.log("【VCAM】2 openCamera Initialized class：" + c2_state_callback.toString());
                     is_first_hook_build = true;
                     process_camera2_init(c2_state_callback);
                 }
@@ -256,7 +256,7 @@ public class HookMain implements IXposedHookLoadPackage {
         XposedHelpers.findAndHookMethod("android.hardware.Camera", lpparam.classLoader, "takePicture", Camera.ShutterCallback.class, Camera.PictureCallback.class, Camera.PictureCallback.class, Camera.PictureCallback.class, new XC_MethodHook() {
             @Override
             protected void afterHookedMethod(MethodHookParam param) {
-                XposedBridge.log("【VCAM】4参数拍照");
+                XposedBridge.log("【VCAM】4 param for photo");
                 if (param.args[1] != null) {
                     process_a_shot_YUV(param);
                 }
@@ -377,7 +377,7 @@ public class HookMain implements IXposedHookLoadPackage {
                     return;
                 }
                 is_someone_playing = false;
-                XposedBridge.log("【VCAM】开始预览");
+                XposedBridge.log("【VCAM】startPreview process");
                 start_preview_camera = (Camera) param.thisObject;
                 if (ori_holder != null) {
 
@@ -552,7 +552,7 @@ public class HookMain implements IXposedHookLoadPackage {
                         }
                     }
                 }
-                XposedBridge.log("【VCAM】添加目标：" + param.args[0].toString());
+                XposedBridge.log("【VCAM】addTarget：" + param.args[0].toString());
                 param.args[0] = c2_virtual_surface;
 
             }
@@ -599,7 +599,7 @@ public class HookMain implements IXposedHookLoadPackage {
                     c2_reader_Surfcae = null;
                 }
 
-                XposedBridge.log("【VCAM】移除目标：" + param.args[0].toString());
+                XposedBridge.log("【VCAM】removeTarget：" + param.args[0].toString());
             }
         });
 
@@ -1012,7 +1012,7 @@ public class HookMain implements IXposedHookLoadPackage {
 
     private void process_a_shot_jpeg(XC_MethodHook.MethodHookParam param, int index) {
         try {
-            XposedBridge.log("【VCAM】第二个jpeg:" + param.args[index].toString());
+            XposedBridge.log("【VCAM】jpeg:" + param.args[index].toString());
         } catch (Exception eee) {
             XposedBridge.log("【VCAM】" + eee);
 

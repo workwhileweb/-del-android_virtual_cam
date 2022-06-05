@@ -94,7 +94,7 @@ public class VideoToFrames implements Runnable {
 
     @SuppressLint("WrongConstant")
     public void videoDecode(String videoFilePath) throws IOException {
-        XposedBridge.log("【VCAM】【decoder】开始解码");
+        XposedBridge.log("【VCAM】【decoder】Started decoder");
         MediaExtractor extractor = null;
         MediaCodec decoder = null;
         try {
@@ -221,7 +221,7 @@ public class VideoToFrames implements Runnable {
                             Thread.sleep(sleepTime);
                         } catch (InterruptedException e) {
                             XposedBridge.log("【VCAM】" + e.toString());
-                            XposedBridge.log("【VCAM】线程延迟出错");
+                            XposedBridge.log("【VCAM】Error thread sleep");
                         }
                     }
                     decoder.releaseOutputBuffer(outputBufferId, true);

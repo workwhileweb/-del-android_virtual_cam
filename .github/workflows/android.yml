@@ -28,5 +28,5 @@ jobs:
       uses: actions/upload-artifact@v3.1.0
       with:
         name: "Publish"
-        path: "android_virtual_cam/app/release/app-release.apk"
+        path: "android_virtual_cam/app"
         # The desired behavior if no files are found using the provided path

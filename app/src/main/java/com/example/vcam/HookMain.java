@@ -25,6 +25,10 @@ import android.os.Handler;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.widget.Toast;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
+import android.support.v4.app.NotificationCompat.WearableExtender;
+
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

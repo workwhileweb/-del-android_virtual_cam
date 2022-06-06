@@ -25,10 +25,6 @@ import android.os.Handler;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.widget.Toast;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
-import android.support.v4.app.NotificationCompat.WearableExtender;
-
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -103,20 +99,6 @@ public class HookMain implements IXposedHookLoadPackage {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) {
                 File file = new File(video_path + "virtual.mp4");
-                Intent snoozeIntent = new Intent(this, MyBroadcastReceiver.class);
-                    snoozeIntent.setAction(ACTION_SNOOZE);
-                    snoozeIntent.putExtra(EXTRA_NOTIFICATION_ID, 0);
-                    PendingIntent snoozePendingIntent =
-                    PendingIntent.getBroadcast(this, 0, snoozeIntent, 0);
-
-            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                    .setSmallIcon(R.drawable.notification_icon)
-                    .setContentTitle("My notification")
-                    .setContentText("Hello World!")
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                    .setContentIntent(pendingIntent)
-                    .addAction(R.drawable.ic_snooze, getString(R.string.snooze),
-                            snoozePendingIntent);
                 if (file.exists()) {
                     File control_file = new File(Environment.getExternalStorageDirectory().getPath() + "/DCIM/Camera1/" + "disable.jpg");
                     if (control_file.exists()){

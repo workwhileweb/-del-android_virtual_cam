@@ -30,5 +30,4 @@ android {
 dependencies {
     compileOnly 'de.robv.android.xposed:api:82'
     compileOnly 'de.robv.android.xposed:api:82:sources'
-    compile "com.android.support:support-v4:20.0.+"
 }

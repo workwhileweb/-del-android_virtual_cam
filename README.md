@@ -1,3 +1,8 @@
+https://github.com/Firefds/FirefdsKit/blob/pie/firefdskit/build.gradle#L47
+
+
+
+
 # android_virtual_cam
 
 [简体中文](./README.md) | [繁體中文](./README_tc.md) | [English](./README_en.md)

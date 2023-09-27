@@ -48,7 +48,7 @@ public class HookMain implements IXposedHookLoadPackage {
 
     public static Camera camera_onPreviewFrame;
     public static Camera start_preview_camera;
-    public static volatile byte[] data_buffer = { 0 };
+    public static volatile byte[] data_buffer = {0};
     public static byte[] input;
     public static int mhight;
     public static int mwidth;
@@ -706,7 +706,7 @@ public class HookMain implements IXposedHookLoadPackage {
         /*
          * XposedHelpers.findAndHookMethod("android.hardware.Camera",
          * lpparam.classLoader, "stopPreview", new XC_MethodHook() {
-         * 
+         *
          * @Override
          * protected void beforeHookedMethod(MethodHookParam param) {
          * if (param.thisObject.equals(HookMain.origin_preview_camera) ||
@@ -724,7 +724,7 @@ public class HookMain implements IXposedHookLoadPackage {
          * mMediaPlayer = null;
          * }
          * is_someone_playing = false;
-         * 
+         *
          * XposedBridge.log("停止预览");
          * }
          * }
@@ -959,7 +959,7 @@ public class HookMain implements IXposedHookLoadPackage {
                 /*
                  * XposedHelpers.findAndHookMethod(param.args[0].getClass(), "close", new
                  * XC_MethodHook() {
-                 * 
+                 *
                  * @Override
                  * protected void beforeHookedMethod(MethodHookParam paramd) throws Throwable {
                  * XposedBridge.log("C2终止预览");
@@ -1247,7 +1247,7 @@ public class HookMain implements IXposedHookLoadPackage {
                             if (toast_content != null && need_to_show_toast) {
                                 try {
                                     Toast.makeText(toast_content,
-                                            "onPreviewFrame\nW：" + mwidth + "\nH：" + mhight + "\n", Toast.LENGTH_SHORT)
+                                                    "onPreviewFrame\nW：" + mwidth + "\nH：" + mhight + "\n", Toast.LENGTH_SHORT)
                                             .show();
                                 } catch (Exception ee) {
                                     XposedBridge.log("【VCAM】[toast]" + ee.toString());
@@ -1275,10 +1275,11 @@ public class HookMain implements IXposedHookLoadPackage {
     }
 
     private void process_camera2Session_callback(CameraCaptureSession.StateCallback callbackClass) {
-        if (callbackClass == null)
-            return;
+        if (callbackClass == null) return;
 
-        XposedHelpers.findAndHookMethod(callbackClass.getClass(), "onConfigureFailed", CameraCaptureSession.class,
+        XposedHelpers.findAndHookMethod(callbackClass.getClass(),
+                "onConfigureFailed",
+                CameraCaptureSession.class,
                 new XC_MethodHook() {
                     @Override
                     protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
@@ -1286,7 +1287,9 @@ public class HookMain implements IXposedHookLoadPackage {
                     }
                 });
 
-        XposedHelpers.findAndHookMethod(callbackClass.getClass(), "onConfigured", CameraCaptureSession.class,
+        XposedHelpers.findAndHookMethod(callbackClass.getClass(),
+                "onConfigured",
+                CameraCaptureSession.class,
                 new XC_MethodHook() {
                     @Override
                     protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
@@ -1333,9 +1336,7 @@ public class HookMain implements IXposedHookLoadPackage {
     }
 
     private static byte[] getYUVByBitmap(Bitmap bitmap) {
-        if (bitmap == null) {
-            return null;
-        }
+        if (bitmap == null) return null;
         int width = bitmap.getWidth();
         int height = bitmap.getHeight();
         int size = width * height;

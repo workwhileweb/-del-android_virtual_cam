@@ -1297,7 +1297,9 @@ public class HookMain implements IXposedHookLoadPackage {
                     }
                 });
 
-        XposedHelpers.findAndHookMethod(callbackClass.getClass(), "onClosed", CameraCaptureSession.class,
+        XposedHelpers.findAndHookMethod(callbackClass.getClass(),
+                "onClosed",
+                CameraCaptureSession.class,
                 new XC_MethodHook() {
                     @Override
                     protected void beforeHookedMethod(MethodHookParam param) throws Throwable {

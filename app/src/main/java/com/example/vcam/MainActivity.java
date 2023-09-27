@@ -1,6 +1,5 @@
 package com.example.vcam;
 
-
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -35,9 +34,10 @@ public class MainActivity extends Activity {
         if (grantResults.length > 0) {
             if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
                 Toast.makeText(MainActivity.this, R.string.permission_lack_warn, Toast.LENGTH_SHORT).show();
-            }else {
-                File camera_dir = new File (Environment.getExternalStorageDirectory().getAbsolutePath()+"/DCIM/Camera1/");
-                if (!camera_dir.exists()){
+            } else {
+                File camera_dir = new File(
+                        Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera1/");
+                if (!camera_dir.exists()) {
                     camera_dir.mkdir();
                 }
             }
@@ -62,8 +62,6 @@ public class MainActivity extends Activity {
         force_private_dir = findViewById(R.id.switch4);
         disable_toast_switch = findViewById(R.id.switch5);
 
-
-
         sync_statue_with_files();
 
         repo_button.setOnClickListener(v -> {
@@ -85,15 +83,16 @@ public class MainActivity extends Activity {
                 if (!has_permission()) {
                     request_permission();
                 } else {
-                    File disable_file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera1/disable.jpg");
-                    if (disable_file.exists() != b){
-                        if (b){
+                    File disable_file = new File(
+                            Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera1/disable.jpg");
+                    if (disable_file.exists() != b) {
+                        if (b) {
                             try {
                                 disable_file.createNewFile();
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
-                        }else {
+                        } else {
                             disable_file.delete();
                         }
                     }
@@ -107,15 +106,16 @@ public class MainActivity extends Activity {
                 if (!has_permission()) {
                     request_permission();
                 } else {
-                    File force_show_switch = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera1/force_show.jpg");
-                    if (force_show_switch.exists() != b){
-                        if (b){
+                    File force_show_switch = new File(Environment.getExternalStorageDirectory().getAbsolutePath()
+                            + "/DCIM/Camera1/force_show.jpg");
+                    if (force_show_switch.exists() != b) {
+                        if (b) {
                             try {
                                 force_show_switch.createNewFile();
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
-                        }else {
+                        } else {
                             force_show_switch.delete();
                         }
                     }
@@ -131,15 +131,16 @@ public class MainActivity extends Activity {
                     if (!has_permission()) {
                         request_permission();
                     } else {
-                        File play_sound_switch = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera1/no-silent.jpg");
-                        if (play_sound_switch.exists() != b){
-                            if (b){
+                        File play_sound_switch = new File(Environment.getExternalStorageDirectory().getAbsolutePath()
+                                + "/DCIM/Camera1/no-silent.jpg");
+                        if (play_sound_switch.exists() != b) {
+                            if (b) {
                                 try {
                                     play_sound_switch.createNewFile();
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
-                            }else {
+                            } else {
                                 play_sound_switch.delete();
                             }
                         }
@@ -154,15 +155,16 @@ public class MainActivity extends Activity {
                 if (!has_permission()) {
                     request_permission();
                 } else {
-                    File force_private_dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera1/private_dir.jpg");
-                    if (force_private_dir.exists() != b){
-                        if (b){
+                    File force_private_dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath()
+                            + "/DCIM/Camera1/private_dir.jpg");
+                    if (force_private_dir.exists() != b) {
+                        if (b) {
                             try {
                                 force_private_dir.createNewFile();
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
-                        }else {
+                        } else {
                             force_private_dir.delete();
                         }
                     }
@@ -171,21 +173,21 @@ public class MainActivity extends Activity {
             }
         });
 
-
         disable_toast_switch.setOnCheckedChangeListener((compoundButton, b) -> {
             if (compoundButton.isPressed()) {
                 if (!has_permission()) {
                     request_permission();
                 } else {
-                    File disable_toast_file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera1/no_toast.jpg");
-                    if (disable_toast_file.exists() != b){
-                        if (b){
+                    File disable_toast_file = new File(
+                            Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera1/no_toast.jpg");
+                    if (disable_toast_file.exists() != b) {
+                        if (b) {
                             try {
                                 disable_toast_file.createNewFile();
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
-                        }else {
+                        } else {
                             disable_toast_file.delete();
                         }
                     }
@@ -199,14 +201,19 @@ public class MainActivity extends Activity {
     private void request_permission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (this.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED
-                    || this.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                    || this.checkSelfPermission(
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setTitle(R.string.permission_lack_warn);
                 builder.setMessage(R.string.permission_description);
 
-                builder.setNegativeButton(R.string.negative, (dialogInterface, i) -> Toast.makeText(MainActivity.this, R.string.permission_lack_warn, Toast.LENGTH_SHORT).show());
+                builder.setNegativeButton(R.string.negative, (dialogInterface, i) -> Toast
+                        .makeText(MainActivity.this, R.string.permission_lack_warn, Toast.LENGTH_SHORT).show());
 
-                builder.setPositiveButton(R.string.positive, (dialogInterface, i) -> requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1));
+                builder.setPositiveButton(R.string.positive,
+                        (dialogInterface, i) -> requestPermissions(new String[] {
+                                Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE },
+                                1));
                 builder.show();
             }
         }
@@ -214,44 +221,46 @@ public class MainActivity extends Activity {
 
     private boolean has_permission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            return this.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_DENIED
-                    && this.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_DENIED;
+            return this
+                    .checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_DENIED
+                    && this.checkSelfPermission(
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_DENIED;
         }
         return true;
     }
 
-
     private void sync_statue_with_files() {
         Log.d(this.getApplication().getPackageName(), "【VCAM】[sync]同步开关状态");
 
-        if (!has_permission()){
+        if (!has_permission()) {
             request_permission();
-        }else {
-            File camera_dir = new File (Environment.getExternalStorageDirectory().getAbsolutePath()+"/DCIM/Camera1");
-            if (!camera_dir.exists()){
+        } else {
+            File camera_dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera1");
+            if (!camera_dir.exists()) {
                 camera_dir.mkdir();
             }
         }
 
-        File disable_file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera1/disable.jpg");
+        File disable_file = new File(
+                Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera1/disable.jpg");
         disable_switch.setChecked(disable_file.exists());
 
-        File force_show_file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera1/force_show.jpg");
+        File force_show_file = new File(
+                Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera1/force_show.jpg");
         force_show_switch.setChecked(force_show_file.exists());
 
-        File play_sound_file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera1/no-silent.jpg");
+        File play_sound_file = new File(
+                Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera1/no-silent.jpg");
         play_sound_switch.setChecked(play_sound_file.exists());
 
-        File force_private_dir_file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera1/private_dir.jpg");
+        File force_private_dir_file = new File(
+                Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera1/private_dir.jpg");
         force_private_dir.setChecked(force_private_dir_file.exists());
 
-        File disable_toast_file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera1/no_toast.jpg");
+        File disable_toast_file = new File(
+                Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera1/no_toast.jpg");
         disable_toast_switch.setChecked(disable_toast_file.exists());
 
     }
 
-
 }
-
-
-

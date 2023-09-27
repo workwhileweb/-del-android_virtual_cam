@@ -305,7 +305,10 @@ public class HookMain implements IXposedHookLoadPackage {
                     }
                 });
 
-        XposedHelpers.findAndHookMethod("android.app.Instrumentation", lpparam.classLoader, "callApplicationOnCreate",
+        XposedHelpers.findAndHookMethod(
+                "android.app.Instrumentation",
+                lpparam.classLoader,
+                "callApplicationOnCreate",
                 Application.class, new XC_MethodHook() {
                     @Override
                     protected void afterHookedMethod(MethodHookParam param) throws Throwable {
@@ -1251,7 +1254,8 @@ public class HookMain implements IXposedHookLoadPackage {
                                 }
                             }
 
-                            if (finalNeed_stop == 1) return;
+                            if (finalNeed_stop == 1)
+                                return;
 
                             if (hw_decode_obj != null) {
                                 hw_decode_obj.stopDecode();
@@ -1271,7 +1275,8 @@ public class HookMain implements IXposedHookLoadPackage {
     }
 
     private void process_camera2Session_callback(CameraCaptureSession.StateCallback callbackClass) {
-        if (callbackClass == null) return;
+        if (callbackClass == null)
+            return;
 
         XposedHelpers.findAndHookMethod(callbackClass.getClass(), "onConfigureFailed", CameraCaptureSession.class,
                 new XC_MethodHook() {

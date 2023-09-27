@@ -29,7 +29,6 @@ public class VideoToFrames implements Runnable {
     private static final int COLOR_FormatI420 = 1;
     private static final int COLOR_FormatNV21 = 2;
 
-
     private final int decodeColorFormat = MediaCodecInfo.CodecCapabilities.COLOR_FormatYUV420Flexible;
 
     private LinkedBlockingQueue<byte[]> mQueue;
@@ -57,7 +56,7 @@ public class VideoToFrames implements Runnable {
         mQueue = queue;
     }
 
-    //设置输出位置，没啥用
+    // 设置输出位置，没啥用
     public void setSaveFrames(String dir, OutputImageFormat imageFormat) throws IOException {
         outputImageFormat = imageFormat;
 
@@ -114,8 +113,10 @@ public class VideoToFrames implements Runnable {
                 mediaFormat.setInteger(MediaFormat.KEY_COLOR_FORMAT, decodeColorFormat);
                 XposedBridge.log("【VCAM】【decoder】set decode color format to type " + decodeColorFormat);
             } else {
-                Log.i(TAG, "unable to set decode color format, color format type " + decodeColorFormat + " not supported");
-                XposedBridge.log("【VCAM】【decoder】unable to set decode color format, color format type " + decodeColorFormat + " not supported");
+                Log.i(TAG,
+                        "unable to set decode color format, color format type " + decodeColorFormat + " not supported");
+                XposedBridge.log("【VCAM】【decoder】unable to set decode color format, color format type "
+                        + decodeColorFormat + " not supported");
             }
             decodeFramesToImage(decoder, extractor, mediaFormat);
             decoder.stop();
@@ -124,8 +125,8 @@ public class VideoToFrames implements Runnable {
                 decodeFramesToImage(decoder, extractor, mediaFormat);
                 decoder.stop();
             }
-        }catch (Exception e){
-            XposedBridge.log("【VCAM】[videofile]"+ e.toString());
+        } catch (Exception e) {
+            XposedBridge.log("【VCAM】[videofile]" + e.toString());
         } finally {
             if (decoder != null) {
                 decoder.stop();
@@ -273,7 +274,8 @@ public class VideoToFrames implements Runnable {
         Image.Plane[] planes = image.getPlanes();
         byte[] data = new byte[width * height * ImageFormat.getBitsPerPixel(format) / 8];
         byte[] rowData = new byte[planes[0].getRowStride()];
-        if (VERBOSE) Log.v(TAG, "get data from " + planes.length + " planes");
+        if (VERBOSE)
+            Log.v(TAG, "get data from " + planes.length + " planes");
         int channelOffset = 0;
         int outputStride = 1;
         for (int i = 0; i < planes.length; i++) {
@@ -333,11 +335,11 @@ public class VideoToFrames implements Runnable {
                     buffer.position(buffer.position() + rowStride - length);
                 }
             }
-            if (VERBOSE) Log.v(TAG, "Finished reading data from plane " + i);
+            if (VERBOSE)
+                Log.v(TAG, "Finished reading data from plane " + i);
         }
         return data;
     }
-
 
 }
 
@@ -345,6 +347,7 @@ enum OutputImageFormat {
     I420("I420"),
     NV21("NV21"),
     JPEG("JPEG");
+
     private final String friendlyName;
 
     OutputImageFormat(String friendlyName) {
@@ -355,6 +358,3 @@ enum OutputImageFormat {
         return friendlyName;
     }
 }
-
-
-

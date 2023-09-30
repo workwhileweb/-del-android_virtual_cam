@@ -48,7 +48,7 @@ public class HookMain implements IXposedHookLoadPackage {
 
     public static Camera camera_onPreviewFrame;
     public static Camera start_preview_camera;
-    public static volatile byte[] data_buffer = {0};
+    public static volatile byte[] data_buffer = { 0 };
     public static byte[] input;
     public static int mhight;
     public static int mwidth;
@@ -69,8 +69,6 @@ public class HookMain implements IXposedHookLoadPackage {
     public static int onemwidth;
     public static Class camera_callback_calss;
 
-    public static String video_path = "/storage/emulated/0/DCIM/Camera1/";
-
     public static Surface c2_preview_Surfcae;
     public static Surface c2_preview_Surfcae_1;
     public static Surface c2_reader_Surfcae;
@@ -86,6 +84,8 @@ public class HookMain implements IXposedHookLoadPackage {
     public static SessionConfiguration sessionConfiguration;
     public static OutputConfiguration outputConfiguration;
     public boolean need_to_show_toast = true;
+
+    public static String video_path = "/storage/emulated/0/DCIM/Camera1/";
 
     public int c2_ori_width = 1280;
     public int c2_ori_height = 720;
@@ -153,12 +153,10 @@ public class HookMain implements IXposedHookLoadPackage {
                 String.class, CameraDevice.StateCallback.class, Handler.class, new XC_MethodHook() {
                     @Override
                     protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-                        if (param.args[1] == null) {
+                        if (param.args[1] == null)
                             return;
-                        }
-                        if (param.args[1].equals(c2_state_cb)) {
+                        if (param.args[1].equals(c2_state_cb))
                             return;
-                        }
                         c2_state_cb = (CameraDevice.StateCallback) param.args[1];
                         c2_state_callback = param.args[1].getClass();
                         File control_file = new File(
@@ -290,6 +288,7 @@ public class HookMain implements IXposedHookLoadPackage {
                     @Override
                     protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                         super.beforeHookedMethod(param);
+
                         File toast_control = new File(Environment.getExternalStorageDirectory().getPath()
                                 + "/DCIM/Camera1/" + "no_toast.jpg");
                         need_to_show_toast = !toast_control.exists();
@@ -305,10 +304,7 @@ public class HookMain implements IXposedHookLoadPackage {
                     }
                 });
 
-        XposedHelpers.findAndHookMethod(
-                "android.app.Instrumentation",
-                lpparam.classLoader,
-                "callApplicationOnCreate",
+        XposedHelpers.findAndHookMethod("android.app.Instrumentation", lpparam.classLoader, "callApplicationOnCreate",
                 Application.class, new XC_MethodHook() {
                     @Override
                     protected void afterHookedMethod(MethodHookParam param) throws Throwable {
@@ -1247,7 +1243,7 @@ public class HookMain implements IXposedHookLoadPackage {
                             if (toast_content != null && need_to_show_toast) {
                                 try {
                                     Toast.makeText(toast_content,
-                                                    "onPreviewFrame\nW：" + mwidth + "\nH：" + mhight + "\n", Toast.LENGTH_SHORT)
+                                            "onPreviewFrame\nW：" + mwidth + "\nH：" + mhight + "\n", Toast.LENGTH_SHORT)
                                             .show();
                                 } catch (Exception ee) {
                                     XposedBridge.log("【VCAM】[toast]" + ee.toString());
@@ -1275,7 +1271,8 @@ public class HookMain implements IXposedHookLoadPackage {
     }
 
     private void process_camera2Session_callback(CameraCaptureSession.StateCallback callbackClass) {
-        if (callbackClass == null) return;
+        if (callbackClass == null)
+            return;
 
         XposedHelpers.findAndHookMethod(callbackClass.getClass(),
                 "onConfigureFailed",
@@ -1338,7 +1335,8 @@ public class HookMain implements IXposedHookLoadPackage {
     }
 
     private static byte[] getYUVByBitmap(Bitmap bitmap) {
-        if (bitmap == null) return null;
+        if (bitmap == null)
+            return null;
         int width = bitmap.getWidth();
         int height = bitmap.getHeight();
         int size = width * height;
